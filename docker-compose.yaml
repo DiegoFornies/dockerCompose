@@ -1,0 +1,23 @@
+services:
+  nginx:
+    image: nginx:latest
+    ports: 
+      - "4000:4000"
+    volumes:
+      - .:/etc/nginx/conf.d/:ro
+    depends_on:
+      - test
+      - trafico
+      - tiempo
+  test:
+    build: .
+  trafico:
+    build: .
+    deploy:
+      mode: replicated
+      replicas: 3
+  tiempo:
+    build: .
+    deploy:
+      mode: replicated
+      replicas: 2
